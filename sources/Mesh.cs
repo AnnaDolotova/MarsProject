@@ -15,7 +15,7 @@ using OpenTK.Platform;
 
 //Name of our project
 // uint 0...4294967295
-namespace Project
+namespace WindowsFormsApplication4
 {
 	
 	//=============================================================
