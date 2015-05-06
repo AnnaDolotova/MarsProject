@@ -9,7 +9,7 @@ using OpenTK.Graphics.OpenGL;
 
 //3DEM program exports 8/16-bit Textures
 
-namespace DrawHeightmapGL
+namespace WindowsFormsApplication4
 {
     class ImageGDI
     {
