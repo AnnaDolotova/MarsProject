@@ -94,7 +94,7 @@ namespace WindowsFormsApplication4
             
             ImageGDI.LoadFromDisk("4.bmp", out TMU0_Handle, out TMU0_Target, out imageWidth, out imageHeight);
         }
-//ффункция пересчёта данных -масштабирование
+//функция пересчёта данных -масштабирование
 		//устанавливаем разрешение
         public void Calculate(float flHeightScale, float flResolution)
         {
@@ -116,9 +116,8 @@ namespace WindowsFormsApplication4
                         if (nIndex < m_nVertexCount)
                         {
                             // Using This Quick Hack, Figure The X,Z Position Of The Point
-                            flX = (float)nX + ((nTri == 1 || nTri == 2 || nTri == 5) ? flResolution : 0.0f);
+ 							flX = (float)nX + ((nTri == 1 || nTri == 2 || nTri == 5) ? flResolution : 0.0f);
                             flZ = (float)nZ + ((nTri == 2 || nTri == 4 || nTri == 5) ? flResolution : 0.0f);
-
                             m_pVertices[nIndex] = new OpenTK.Math.Vector3();
                             // Set The Data, Using PtHeight To Obtain The Y Value
                             m_pVertices[nIndex].Z = (flX - (MAP_SIZE_X / 2)) * 10;
@@ -154,7 +153,7 @@ namespace WindowsFormsApplication4
 
             return pHeightMap[x + (y * MAP_SIZE_X)];      // Возвращаем значение высоты
         }
-
+// Vertex Buffer Object - Особенность OpenGL, обеспечивающая методы выгрузки данных (вершин, вектора нормали, цветов, и так далее.) в видеоустройство для не оперативного режима рендеринга. VBO дали существенный прирост производительности над непосредственным режимом визуализации, в первую очередь, потому что данные находятся в памяти видеоустройства, а не в оперативной памяти и поэтому она может быть отрендерена непосредственно видеоустройством.
         public void BuildVBOs()
         {
             // Generate And Bind The Vertex Buffer
