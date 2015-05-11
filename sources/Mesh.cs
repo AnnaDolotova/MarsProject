@@ -21,7 +21,7 @@ namespace WindowsFormsApplication4
 	//=============================================================
 	//==================Class_Mesh=================================
 	//=============================================================
-	//	Library Open.TK.Math helps us to use arrays easily. We can use type vector, which is needed for loading data. 
+	//	Library Open.TK.Math helps us to use arrays easily. We can use type vector, which is needed for loading data.
     public class Mesh
     {
         int MAP_SIZE_X = 3840;     // Size of the vertex map
@@ -92,7 +92,7 @@ namespace WindowsFormsApplication4
         private void LoadTexture(string filename)
         {
             
-            ImageGDI.LoadFromDisk("4.bmp", out TMU0_Handle, out TMU0_Target, out imageWidth, out imageHeight);
+            ImageGDI.LoadFromDisk(filename, out TMU0_Handle, out TMU0_Target, out imageWidth, out imageHeight);
         }
 //функция пересчёта данных -масштабирование
 		//устанавливаем разрешение
@@ -185,56 +185,56 @@ namespace WindowsFormsApplication4
             GL.Color3(Color.SkyBlue);
 
             //  задняя грань
-            GL.Vertex3(minX - 1000, maxY + 1000, minZ - 1000);
-            GL.Vertex3(maxX + 1000, maxY + 1000, minZ - 1000);
+            GL.Vertex3(minX - TextureLoaderParameters.textr_const, maxY + TextureLoaderParameters.textr_const, minZ - TextureLoaderParameters.textr_const);
+            GL.Vertex3(maxX + TextureLoaderParameters.textr_const, maxY + TextureLoaderParameters.textr_const, minZ - TextureLoaderParameters.textr_const);
 
-            GL.Vertex3(maxX + 1000, maxY + 1000, minZ - 1000);
-            GL.Vertex3(maxX + 1000, minY - 1000, minZ - 1000);
+            GL.Vertex3(maxX + TextureLoaderParameters.textr_const, maxY + TextureLoaderParameters.textr_const, minZ - TextureLoaderParameters.textr_const);
+            GL.Vertex3(maxX + TextureLoaderParameters.textr_const, minY - TextureLoaderParameters.textr_const, minZ - TextureLoaderParameters.textr_const);
 
-            GL.Vertex3(maxX + 1000, minY - 1000, minZ - 1000);
-            GL.Vertex3(minX - 1000, minY - 1000, minZ - 1000);
+            GL.Vertex3(maxX + TextureLoaderParameters.textr_const, minY - TextureLoaderParameters.textr_const, minZ - TextureLoaderParameters.textr_const);
+            GL.Vertex3(minX - TextureLoaderParameters.textr_const, minY - TextureLoaderParameters.textr_const, minZ - TextureLoaderParameters.textr_const);
 
-            GL.Vertex3(minX - 1000, minY - 1000, minZ - 1000);
-            GL.Vertex3(minX - 1000, maxY + 1000, minZ - 1000);
+            GL.Vertex3(minX - TextureLoaderParameters.textr_const, minY - TextureLoaderParameters.textr_const, minZ - TextureLoaderParameters.textr_const);
+            GL.Vertex3(minX - TextureLoaderParameters.textr_const, maxY + TextureLoaderParameters.textr_const, minZ - TextureLoaderParameters.textr_const);
 
             //  верхняя грань
-            GL.Vertex3(minX - 1000, maxY + 1000, minZ - 1000);
-            GL.Vertex3(maxX + 1000, maxY + 1000, minZ - 1000);
+            GL.Vertex3(minX - TextureLoaderParameters.textr_const, maxY + TextureLoaderParameters.textr_const, minZ - TextureLoaderParameters.textr_const);
+            GL.Vertex3(maxX + TextureLoaderParameters.textr_const, maxY + TextureLoaderParameters.textr_const, minZ - TextureLoaderParameters.textr_const);
 
-            GL.Vertex3(maxX + 1000, maxY + 1000, minZ - 1000);
-            GL.Vertex3(maxX + 1000, maxY + 1000, maxZ + 1000);
+            GL.Vertex3(maxX + TextureLoaderParameters.textr_const, maxY + TextureLoaderParameters.textr_const, minZ - TextureLoaderParameters.textr_const);
+            GL.Vertex3(maxX + TextureLoaderParameters.textr_const, maxY + TextureLoaderParameters.textr_const, maxZ + TextureLoaderParameters.textr_const);
 
-            GL.Vertex3(maxX + 1000, maxY + 1000, maxZ + 1000);
-            GL.Vertex3(minX - 1000, maxY + 1000, maxZ + 1000);
+            GL.Vertex3(maxX + TextureLoaderParameters.textr_const, maxY + TextureLoaderParameters.textr_const, maxZ + TextureLoaderParameters.textr_const);
+            GL.Vertex3(minX - TextureLoaderParameters.textr_const, maxY + TextureLoaderParameters.textr_const, maxZ + TextureLoaderParameters.textr_const);
 
-            GL.Vertex3(minX - 1000, maxY + 1000, maxZ + 1000);
-            GL.Vertex3(minX - 1000, maxY + 1000, minZ - 1000);
+            GL.Vertex3(minX - TextureLoaderParameters.textr_const, maxY + TextureLoaderParameters.textr_const, maxZ + TextureLoaderParameters.textr_const);
+            GL.Vertex3(minX - TextureLoaderParameters.textr_const, maxY + TextureLoaderParameters.textr_const, minZ - TextureLoaderParameters.textr_const);
 
             //  передняя грань
-            GL.Vertex3(minX - 1000, maxY + 1000, maxZ + 1000);
-            GL.Vertex3(maxX + 1000, maxY + 1000, maxZ + 1000);
+            GL.Vertex3(minX - TextureLoaderParameters.textr_const, maxY + TextureLoaderParameters.textr_const, maxZ + TextureLoaderParameters.textr_const);
+            GL.Vertex3(maxX + TextureLoaderParameters.textr_const, maxY + TextureLoaderParameters.textr_const, maxZ + TextureLoaderParameters.textr_const);
 
-            GL.Vertex3(maxX + 1000, maxY + 1000, maxZ + 1000);
-            GL.Vertex3(maxX + 1000, minY - 1000, maxZ + 1000);
+            GL.Vertex3(maxX + TextureLoaderParameters.textr_const, maxY + TextureLoaderParameters.textr_const, maxZ + TextureLoaderParameters.textr_const);
+            GL.Vertex3(maxX + TextureLoaderParameters.textr_const, minY - TextureLoaderParameters.textr_const, maxZ + TextureLoaderParameters.textr_const);
 
-            GL.Vertex3(maxX + 1000, minY - 1000, maxZ + 1000);
-            GL.Vertex3(minX - 1000, minY - 1000, maxZ + 1000);
+            GL.Vertex3(maxX + TextureLoaderParameters.textr_const, minY - TextureLoaderParameters.textr_const, maxZ + TextureLoaderParameters.textr_const);
+            GL.Vertex3(minX - TextureLoaderParameters.textr_const, minY - TextureLoaderParameters.textr_const, maxZ + TextureLoaderParameters.textr_const);
 
-            GL.Vertex3(minX - 1000, minY - 1000, maxZ + 1000);
-            GL.Vertex3(minX - 1000, maxY + 1000, maxZ + 1000);
+            GL.Vertex3(minX - TextureLoaderParameters.textr_const, minY - TextureLoaderParameters.textr_const, maxZ + TextureLoaderParameters.textr_const);
+            GL.Vertex3(minX - TextureLoaderParameters.textr_const, maxY + TextureLoaderParameters.textr_const, maxZ + TextureLoaderParameters.textr_const);
           
             //  Нижняя грань
-            GL.Vertex3(minX - 1000, minY - 1000, minZ - 1000);
-            GL.Vertex3(maxX + 1000, minY - 1000, minZ - 1000);
+            GL.Vertex3(minX - TextureLoaderParameters.textr_const, minY - TextureLoaderParameters.textr_const, minZ - TextureLoaderParameters.textr_const);
+            GL.Vertex3(maxX + TextureLoaderParameters.textr_const, minY - TextureLoaderParameters.textr_const, minZ - TextureLoaderParameters.textr_const);
 
-            GL.Vertex3(maxX + 1000, minY - 1000, minZ - 1000);
-            GL.Vertex3(maxX + 1000, minY - 1000, maxZ + 1000);
+            GL.Vertex3(maxX + TextureLoaderParameters.textr_const, minY - TextureLoaderParameters.textr_const, minZ - TextureLoaderParameters.textr_const);
+            GL.Vertex3(maxX + TextureLoaderParameters.textr_const, minY - TextureLoaderParameters.textr_const, maxZ + TextureLoaderParameters.textr_const);
 
-            GL.Vertex3(maxX + 1000, minY - 1000, maxZ + 1000);
-            GL.Vertex3(minX - 1000, minY - 1000, maxZ + 1000);
+            GL.Vertex3(maxX + TextureLoaderParameters.textr_const, minY - TextureLoaderParameters.textr_const, maxZ + TextureLoaderParameters.textr_const);
+            GL.Vertex3(minX - TextureLoaderParameters.textr_const, minY - TextureLoaderParameters.textr_const, maxZ + TextureLoaderParameters.textr_const);
 
-            GL.Vertex3(minX - 1000, minY - 1000, maxZ + 1000);
-            GL.Vertex3(minX - 1000, minY - 1000, minZ - 1000);
+            GL.Vertex3(minX - TextureLoaderParameters.textr_const, minY - TextureLoaderParameters.textr_const, maxZ + TextureLoaderParameters.textr_const);
+            GL.Vertex3(minX - TextureLoaderParameters.textr_const, minY - TextureLoaderParameters.textr_const, minZ - TextureLoaderParameters.textr_const);
 
             GL.End();
             #endregion
