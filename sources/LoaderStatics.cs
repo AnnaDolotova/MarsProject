@@ -10,7 +10,7 @@ using System;
 
 using OpenTK.Graphics.OpenGL;
 
-namespace DrawHeightmapGL
+namespace WindowsFormsApplication4
 {
 
     //The parameters in this class have only effect on the following Texture loads.
