@@ -25,11 +25,11 @@ namespace WindowsFormsApplication4
         private bool loaded = false;
         private bool mouseDown = false; // observe
 
-        float X = 0.0f;        // Translate screen to x direction
-        float Y = 0.0f;        // Translate screen to y direction
-        float Z = 0.0f;        // Translate screen to z direction
+        float X = -5500.0f;        // Translate screen to x direction (left or right)
+        float Y = -27000.0f;        // Translate screen to y direction (up or down)
+        float Z = -50000.0f;        // Translate screen to z direction (zoom in or out)
 
-        float rotX = 0.0f;    // Rotate screen on x axis 
+        float rotX = 13.0f;    // Rotate screen on x axis 
         float rotY = 0.0f;    // Rotate screen on y axis
         float rotZ = 0.0f;    // Rotate screen on z axis
 
@@ -105,11 +105,11 @@ namespace WindowsFormsApplication4
 
         private void button1_Click(object sender, EventArgs e)
         {
-            X = 0.0f;        // Translate screen to x direction
-            Y = 0.0f;        // Translate screen to y direction
-            Z = 0.0f;        // Translate screen to z direction
+            X = -5500.0f;        // Translate screen to x direction (left or right)
+            Y = -27000.0f;        // Translate screen to y direction (up or down)
+            Z = -50000.0f;        // Translate screen to z direction (zoom in or out)
 
-            rotX = 0.0f;    // Rotate screen on x axis 
+            rotX = 13.0f;    // Rotate screen on x axis 
             rotY = 0.0f;    // Rotate screen on y axis
             rotZ = 0.0f;    // Rotate screen on z axis
 
@@ -144,13 +144,10 @@ namespace WindowsFormsApplication4
 
             GL.Color3(Color.White);
 
-            //GL.BindBuffer(BufferTarget.ArrayBuffer, mesh.m_nVBOVertices);			// Bind The Buffer
             GL.VertexPointer(3, VertexPointerType.Float, 0, new IntPtr(0));		// Set The Vertex Pointer To The Vertex Buffer
 
-            //GL.BindBuffer(BufferTarget.ArrayBuffer, mesh.m_nVBORGB);			// Bind The Buffer
             GL.ColorPointer(3, ColorPointerType.Float, 0, new IntPtr(0));		// Set The Vertex Pointer To The Vertex Buffer
 
-            //GL.BindBuffer(BufferTarget.ArrayBuffer, mesh.m_nVBOTexCoords);		// Bind The Buffer
             GL.TexCoordPointer(2, TexCoordPointerType.Float, 0, new IntPtr(0));		// Set The TexCoord Pointer To The TexCoord Buffer
 
             GL.ActiveTexture(TextureUnit.Texture0);
@@ -212,7 +209,7 @@ namespace WindowsFormsApplication4
 
             SetupViewport();
 
-            mesh.Load("4.bin", "4.bmp", MESH_HEIGHTSCALE, MESH_RESOLUTION);
+           
             mesh.BuildVBOs();
         }
 
@@ -268,12 +265,6 @@ namespace WindowsFormsApplication4
         {
             Z += e.Delta * 10;
 
-            //if (Z >= 258)
-            //    Z = 258;
-
-            //if (Z <= -350)
-            //    Z = -350;
-
             glControl1.Invalidate();
         }
 
@@ -294,7 +285,7 @@ namespace WindowsFormsApplication4
 
         private void radioButton7_CheckedChanged(object sender, EventArgs e)
         {
-
+            mesh.Load("4.bin", "4.bmp", MESH_HEIGHTSCALE, MESH_RESOLUTION);
         }
 
     }
