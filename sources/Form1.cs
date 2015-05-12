@@ -52,7 +52,7 @@ namespace WindowsFormsApplication4
 
         }
 
-        private void trackBar1_Scroll(object sender, EventArgs e)
+        private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
             MESH_HEIGHTSCALE = trackBar1.Value;
 
@@ -62,7 +62,7 @@ namespace WindowsFormsApplication4
            glControl1.Invalidate(); //
         }
 
-        private void trackBar2_Scroll(object sender, EventArgs e)
+        private void trackBar2_ValueChanged(object sender, EventArgs e)
         {
             MESH_RESOLUTION = trackBar2.Value;	
             
@@ -141,7 +141,6 @@ namespace WindowsFormsApplication4
                 mesh.DrawRectengle();
             }
 
-
             GL.Color3(Color.White);
 
             GL.VertexPointer(3, VertexPointerType.Float, 0, new IntPtr(0));		// Set The Vertex Pointer To The Vertex Buffer
@@ -199,16 +198,17 @@ namespace WindowsFormsApplication4
             loaded = true;
             GL.ClearColor(Color.Black);
             GL.ClearDepth(1.0f);	  									// Depth Buffer Setup
-            GL.DepthFunc(DepthFunction.Lequal);
+            GL.DepthFunc(DepthFunction.Lequal);                         // (Passes if the incoming depth value is less than or equal to the stored depth value.)
             GL.Enable(EnableCap.DepthTest);									// Enable Depth Testing
             GL.ShadeModel(ShadingModel.Smooth);									// Select Smooth Shading
             GL.Hint(HintTarget.PerspectiveCorrectionHint, HintMode.Nicest);			// Set Perspective Calculations To Most Accurate
-            GL.Hint(HintTarget.PolygonSmoothHint, HintMode.Nicest);			// Set Perspective Calculations To Most Accurate
+            GL.Hint(HintTarget.PolygonSmoothHint, HintMode.Nicest);			// GL_NICEST - The most correct, or highest quality, option should be chosen.
+                                                            // GL_PERSPECTIVE_CORRECTION_HINT - Indicates the quality of color, texture coordinate, and fog coordinate interpolation.
+                                                            // GL_POLYGON_SMOOTH_HINT - Indicates the sampling quality of antialiased polygons.
 
             GL.PolygonMode(MaterialFace.Front, PolygonMode.Fill);
 
             SetupViewport();
-
            
             mesh.BuildVBOs();
         }
@@ -219,10 +219,13 @@ namespace WindowsFormsApplication4
             int h = glControl1.Height;
 
             GL.Viewport(0, 0, w, h);
-            GL.MatrixMode(MatrixMode.Projection);
+            GL.MatrixMode(MatrixMode.Projection); //перейти в режим управления матрицей проецирования
             GL.LoadIdentity();
-            Glu.Perspective(45.0, w / (double)h, 0.1, 90000.0);
-            GL.MatrixMode(MatrixMode.Modelview);
+            Glu.Perspective(45.0, w / (double)h, 0.1, 90000.0); //Specifies the field of view angle, in degrees, in the y direction.
+                                                                //Specifies the aspect ratio that determines the field of view in the x direction. The aspect ratio is the ratio of x (width) to y (height).
+                                                                //Specifies the distance from the viewer to the near clipping plane.
+                                                                //Specifies the distance from the viewer to the far clipping plane.
+            GL.MatrixMode(MatrixMode.Modelview); //перейти в режим управления матрицей модельно-видового преобразования
             GL.LoadIdentity();
         }
 
