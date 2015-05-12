@@ -1,6 +1,6 @@
 ﻿using OpenTK; //OpenGL
 using OpenTK.Graphics;
-// using OpenTK.Math;
+using OpenTK.Math;
 using OpenTK.Input;
 using OpenTK.Platform;
 using System;
@@ -20,7 +20,7 @@ namespace WindowsFormsApplication4
         float MESH_RESOLUTION = 10.0f;									// Pixels
         float MESH_HEIGHTSCALE = 0.01f;									// Height Scale
 
-        // Mesh mesh = new Mesh();
+        Mesh mesh = new Mesh();
 
         private bool loaded = false;
         private bool mouseDown = false; // observe
@@ -56,8 +56,8 @@ namespace WindowsFormsApplication4
         {
             MESH_HEIGHTSCALE = trackBar1.Value;
 
-            //mesh.Calculate(HEIGHTSCALE, RESOLUTION); // count data
-            //mesh.BuildVBOs(); // build it, we will create this func
+            mesh.Calculate(MESH_HEIGHTSCALE, MESH_RESOLUTION); // count data
+            mesh.BuildVBOs(); // build it, we will create this func
 
            glControl1.Invalidate(); //
         }
@@ -66,8 +66,8 @@ namespace WindowsFormsApplication4
         {
             MESH_RESOLUTION = trackBar2.Value;	
             
-            //mesh.Calculate(HEIGHTSCALE, RESOLUTION);
-            //mesh.BuildVBOs();
+            mesh.Calculate(MESH_HEIGHTSCALE, MESH_RESOLUTION);
+            mesh.BuildVBOs();
 
             glControl1.Invalidate();
         }
@@ -137,8 +137,8 @@ namespace WindowsFormsApplication4
 
             if (checkBox1.Checked)
             {
-                //mesh.DrawBorder();
-                //mesh.DrawRectengle();
+                mesh.DrawBorder();
+                mesh.DrawRectengle();
             }
 
 
@@ -154,11 +154,11 @@ namespace WindowsFormsApplication4
             GL.TexCoordPointer(2, TexCoordPointerType.Float, 0, new IntPtr(0));		// Set The TexCoord Pointer To The TexCoord Buffer
 
             GL.ActiveTexture(TextureUnit.Texture0);
-            //GL.BindTexture(TextureTarget.Texture2D, mesh.TMU0_Handle);
+            GL.BindTexture(TextureTarget.Texture2D, mesh.TMU0_Handle);
 
-            //GL.DrawArrays(drawMode, 0, mesh.m_nVertexCount);	// Draw All Of The Triangles At Once
+            GL.DrawArrays(drawMode, 0, mesh.m_nVertexCount);	// Draw All Of The Triangles At Once
 
-            //DrawCenter(mesh.maxX - (mesh.maxX - mesh.minX) / 2, mesh.maxY, mesh.maxZ - (mesh.maxZ - mesh.minZ) / 2, 1000);
+            DrawCenter(mesh.maxX - (mesh.maxX - mesh.minX) / 2, mesh.maxY, mesh.maxZ - (mesh.maxZ - mesh.minZ) / 2, 1000);
 
             GL.LoadIdentity();
 
@@ -212,8 +212,8 @@ namespace WindowsFormsApplication4
 
             SetupViewport();
 
-            //mesh.Load("4.bin", "4.bmp", MESH_HEIGHTSCALE, MESH_RESOLUTION);
-            //mesh.BuildVBOs();
+            mesh.Load("4.bin", "4.bmp", MESH_HEIGHTSCALE, MESH_RESOLUTION);
+            mesh.BuildVBOs();
         }
 
         private void SetupViewport()
@@ -262,6 +262,39 @@ namespace WindowsFormsApplication4
 
                 glControl1.Invalidate();
             }
+        }
+
+        private void glControl1_MouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            Z += e.Delta * 10;
+
+            //if (Z >= 258)
+            //    Z = 258;
+
+            //if (Z <= -350)
+            //    Z = -350;
+
+            glControl1.Invalidate();
+        }
+
+        private void radioButton4_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioButton5_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioButton6_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioButton7_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
 
     }
