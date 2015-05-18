@@ -1,9 +1,0 @@
-C:\Users\Marina\Documents\Visual Studio 2012\Projects\WindowsFormsApplication4\WindowsFormsApplication4\bin\Release\Project.exe.config
-C:\Users\Marina\Documents\Visual Studio 2012\Projects\WindowsFormsApplication4\WindowsFormsApplication4\bin\Release\Project.exe
-C:\Users\Marina\Documents\Visual Studio 2012\Projects\WindowsFormsApplication4\WindowsFormsApplication4\bin\Release\Project.pdb
-C:\Users\Marina\Documents\Visual Studio 2012\Projects\WindowsFormsApplication4\WindowsFormsApplication4\obj\Release\WindowsFormsApplication4.Form1.resources
-C:\Users\Marina\Documents\Visual Studio 2012\Projects\WindowsFormsApplication4\WindowsFormsApplication4\obj\Release\Project.Properties.Resources.resources
-C:\Users\Marina\Documents\Visual Studio 2012\Projects\WindowsFormsApplication4\WindowsFormsApplication4\obj\Release\Project.csproj.GenerateResource.Cache
-C:\Users\Marina\Documents\Visual Studio 2012\Projects\WindowsFormsApplication4\WindowsFormsApplication4\obj\Release\Project.exe
-C:\Users\Marina\Documents\Visual Studio 2012\Projects\WindowsFormsApplication4\WindowsFormsApplication4\obj\Release\Project.pdb
-C:\Users\Marina\Documents\Visual Studio 2012\Projects\WindowsFormsApplication4\WindowsFormsApplication4\obj\Release\Project.csprojResolveAssemblyReference.cache
