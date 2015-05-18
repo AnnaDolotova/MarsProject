@@ -202,16 +202,7 @@
             // 
             // trackBar2
             // 
-            this.trackBar2.LargeChange = 10;
-            this.trackBar2.Location = new System.Drawing.Point(3, 87);
-            this.trackBar2.Maximum = 100;
-            this.trackBar2.Minimum = 5;
-            this.trackBar2.Name = "trackBar2";
-            this.trackBar2.Size = new System.Drawing.Size(230, 45);
-            this.trackBar2.TabIndex = 1;
-            this.trackBar2.TickFrequency = 5;
-            this.trackBar2.Value = 10;
-            this.trackBar2.ValueChanged += new System.EventHandler(this.trackBar2_ValueChanged);
+
             // 
             // label2
             // 
@@ -225,14 +216,7 @@
             // 
             // trackBar1
             // 
-            this.trackBar1.Location = new System.Drawing.Point(3, 23);
-            this.trackBar1.Maximum = 100;
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(230, 45);
-            this.trackBar1.TabIndex = 1;
-            this.trackBar1.TickFrequency = 5;
-            this.trackBar1.Value = 10;
-            this.trackBar1.ValueChanged += new System.EventHandler(this.trackBar2_ValueChanged);
+
             // 
             // label1
             // 
