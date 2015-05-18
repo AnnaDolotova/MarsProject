@@ -25,17 +25,18 @@ namespace WindowsFormsApplication4
         private bool loaded = false;
         private bool mouseDown = false; // observe
 
-        float X = 0.0f;        // Translate screen to x direction
-        float Y = 0.0f;        // Translate screen to y direction
-        float Z = 0.0f;        // Translate screen to z direction
+        float X = -5500.0f;        // Translate screen to x direction (left or right)
+        float Y = -27000.0f;        // Translate screen to y direction (up or down)
+        float Z = -50000.0f;        // Translate screen to z direction (zoom in or out)
 
-        float rotX = 0.0f;    // Rotate screen on x axis 
+        float rotX = 13.0f;    // Rotate screen on x axis 
         float rotY = 0.0f;    // Rotate screen on y axis
         float rotZ = 0.0f;    // Rotate screen on z axis
 
         float old_x, old_y, xdiff, ydiff;        // Used for mouse event
 
         BeginMode drawMode;
+        ColorMode colorMode;
 
         public Form1()
         {
@@ -52,7 +53,7 @@ namespace WindowsFormsApplication4
 
         }
 
-        private void trackBar1_Scroll(object sender, EventArgs e)
+        private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
             MESH_HEIGHTSCALE = trackBar1.Value;
 
@@ -62,7 +63,7 @@ namespace WindowsFormsApplication4
            glControl1.Invalidate(); //
         }
 
-        private void trackBar2_Scroll(object sender, EventArgs e)
+        private void trackBar2_ValueChanged(object sender, EventArgs e)
         {
             MESH_RESOLUTION = trackBar2.Value;	
             
@@ -105,11 +106,11 @@ namespace WindowsFormsApplication4
 
         private void button1_Click(object sender, EventArgs e)
         {
-            X = 0.0f;        // Translate screen to x direction
-            Y = 0.0f;        // Translate screen to y direction
-            Z = 0.0f;        // Translate screen to z direction
+            X = -5500.0f;        // Translate screen to x direction (left or right)
+            Y = -27000.0f;        // Translate screen to y direction (up or down)
+            Z = -50000.0f;        // Translate screen to z direction (zoom in or out)
 
-            rotX = 0.0f;    // Rotate screen on x axis 
+            rotX = 13.0f;    // Rotate screen on x axis 
             rotY = 0.0f;    // Rotate screen on y axis
             rotZ = 0.0f;    // Rotate screen on z axis
 
@@ -141,20 +142,30 @@ namespace WindowsFormsApplication4
                 mesh.DrawRectengle();
             }
 
+            GL.EnableClientState(EnableCap.VertexArray);						// Enable Vertex Arrays
+            if (colorMode == ColorMode.Gradient)
+                GL.EnableClientState(EnableCap.ColorArray);						// Enable Vertex Arrays
+            if (colorMode == ColorMode.Texture)
+                GL.EnableClientState(EnableCap.TextureCoordArray);				// Enable Texture Coord Arrays
+
+            if (colorMode == ColorMode.Texture)
+                GL.Enable(EnableCap.Texture2D);									// Enable Textures
 
             GL.Color3(Color.White);
 
-            //GL.BindBuffer(BufferTarget.ArrayBuffer, mesh.m_nVBOVertices);			// Bind The Buffer
+            GL.BindBuffer(BufferTarget.ArrayBuffer, mesh.m_nVBOVertices);			// Bind The Buffer
             GL.VertexPointer(3, VertexPointerType.Float, 0, new IntPtr(0));		// Set The Vertex Pointer To The Vertex Buffer
 
-            //GL.BindBuffer(BufferTarget.ArrayBuffer, mesh.m_nVBORGB);			// Bind The Buffer
+            GL.BindBuffer(BufferTarget.ArrayBuffer, mesh.m_nVBORGB);			// Bind The Buffer
             GL.ColorPointer(3, ColorPointerType.Float, 0, new IntPtr(0));		// Set The Vertex Pointer To The Vertex Buffer
 
-            //GL.BindBuffer(BufferTarget.ArrayBuffer, mesh.m_nVBOTexCoords);		// Bind The Buffer
+            GL.BindBuffer(BufferTarget.ArrayBuffer, mesh.m_nVBOTexCoords);		// Bind The Buffer
             GL.TexCoordPointer(2, TexCoordPointerType.Float, 0, new IntPtr(0));		// Set The TexCoord Pointer To The TexCoord Buffer
+
 
             GL.ActiveTexture(TextureUnit.Texture0);
             GL.BindTexture(TextureTarget.Texture2D, mesh.TMU0_Handle);
+
 
             GL.DrawArrays(drawMode, 0, mesh.m_nVertexCount);	// Draw All Of The Triangles At Once
 
@@ -198,21 +209,23 @@ namespace WindowsFormsApplication4
         private void Form1_Load(object sender, EventArgs e)
         {
             drawMode = BeginMode.Triangles;
+            colorMode = ColorMode.Texture;
 
             loaded = true;
             GL.ClearColor(Color.Black);
             GL.ClearDepth(1.0f);	  									// Depth Buffer Setup
-            GL.DepthFunc(DepthFunction.Lequal);
+            GL.DepthFunc(DepthFunction.Lequal);                         // (Passes if the incoming depth value is less than or equal to the stored depth value.)
             GL.Enable(EnableCap.DepthTest);									// Enable Depth Testing
             GL.ShadeModel(ShadingModel.Smooth);									// Select Smooth Shading
             GL.Hint(HintTarget.PerspectiveCorrectionHint, HintMode.Nicest);			// Set Perspective Calculations To Most Accurate
-            GL.Hint(HintTarget.PolygonSmoothHint, HintMode.Nicest);			// Set Perspective Calculations To Most Accurate
+            GL.Hint(HintTarget.PolygonSmoothHint, HintMode.Nicest);			// GL_NICEST - The most correct, or highest quality, option should be chosen.
+                                                            // GL_PERSPECTIVE_CORRECTION_HINT - Indicates the quality of color, texture coordinate, and fog coordinate interpolation.
+                                                            // GL_POLYGON_SMOOTH_HINT - Indicates the sampling quality of antialiased polygons.
 
             GL.PolygonMode(MaterialFace.Front, PolygonMode.Fill);
 
             SetupViewport();
-
-            mesh.Load("4.bin", "4.bmp", MESH_HEIGHTSCALE, MESH_RESOLUTION);
+           
             mesh.BuildVBOs();
         }
 
@@ -222,10 +235,13 @@ namespace WindowsFormsApplication4
             int h = glControl1.Height;
 
             GL.Viewport(0, 0, w, h);
-            GL.MatrixMode(MatrixMode.Projection);
+            GL.MatrixMode(MatrixMode.Projection); //перейти в режим управления матрицей проецирования
             GL.LoadIdentity();
-            Glu.Perspective(45.0, w / (double)h, 0.1, 90000.0);
-            GL.MatrixMode(MatrixMode.Modelview);
+            Glu.Perspective(45.0, w / (double)h, 0.1, 90000.0); //Specifies the field of view angle, in degrees, in the y direction.
+                                                                //Specifies the aspect ratio that determines the field of view in the x direction. The aspect ratio is the ratio of x (width) to y (height).
+                                                                //Specifies the distance from the viewer to the near clipping plane.
+                                                                //Specifies the distance from the viewer to the far clipping plane.
+            GL.MatrixMode(MatrixMode.Modelview); //перейти в режим управления матрицей модельно-видового преобразования
             GL.LoadIdentity();
         }
 
@@ -268,12 +284,6 @@ namespace WindowsFormsApplication4
         {
             Z += e.Delta * 10;
 
-            //if (Z >= 258)
-            //    Z = 258;
-
-            //if (Z <= -350)
-            //    Z = -350;
-
             glControl1.Invalidate();
         }
 
@@ -294,8 +304,14 @@ namespace WindowsFormsApplication4
 
         private void radioButton7_CheckedChanged(object sender, EventArgs e)
         {
-
+            mesh.Load("4.bin", "4.bmp", MESH_HEIGHTSCALE, MESH_RESOLUTION);
         }
 
+        public enum ColorMode
+        {
+            Texture,
+            Gradient,
+            NotColor
+        }
     }
 }

@@ -14,7 +14,6 @@ using System.Drawing;
 using System.Drawing.Imaging;
 
 using OpenTK;
-using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
 namespace WindowsFormsApplication4
@@ -28,6 +27,8 @@ namespace WindowsFormsApplication4
             dimension = (OpenTK.Graphics.OpenGL.TextureTarget)0;
             texturehandle = TextureLoaderParameters.OpenGLDefaultTexture;
             ErrorCode GLError = ErrorCode.NoError;
+
+            Bitmap CurrentBitmap = null;
 
             try // Exceptions will be thrown if any Problem occurs while working on the file. 
             {
@@ -60,11 +61,6 @@ namespace WindowsFormsApplication4
                     pt = OpenTK.Graphics.OpenGL.PixelType.UnsignedShort5551Ext;
                     break;
 
-                case System.Drawing.Imaging.PixelFormat.Format16bppRgb565:
-                    pif = OpenTK.Graphics.OpenGL.PixelInternalFormat.R5G6B5IccSgix;
-                    pf = OpenTK.Graphics.OpenGL.PixelFormat.R5G6B5IccSgix;
-                    pt = OpenTK.Graphics.OpenGL.PixelType.UnsignedByte;
-                    break;
 
                 case System.Drawing.Imaging.PixelFormat.Format24bppRgb: 
                     pif = OpenTK.Graphics.OpenGL.PixelInternalFormat.Rgb8;
