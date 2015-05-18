@@ -49,29 +49,20 @@ namespace WindowsFormsApplication4
 
                 switch (CurrentBitmap.PixelFormat)
                 {
-                case System.Drawing.Imaging.PixelFormat.Format8bppIndexed: 
-                    pif = OpenTK.Graphics.OpenGL.PixelInternalFormat.Rgb8;
-                    pf = OpenTK.Graphics.OpenGL.PixelFormat.ColorIndex;
-                    pt = OpenTK.Graphics.OpenGL.PixelType.Bitmap;
+                case System.Drawing.Imaging.PixelFormat.Format8bppIndexed:
+                    Format8bppIndexed object1 = new Format8bppIndexed();
                     break;
 
-                case System.Drawing.Imaging.PixelFormat.Format16bppRgb555: 
-                    pif = OpenTK.Graphics.OpenGL.PixelInternalFormat.Rgb5A1;
-                    pf = OpenTK.Graphics.OpenGL.PixelFormat.Bgr;
-                    pt = OpenTK.Graphics.OpenGL.PixelType.UnsignedShort5551Ext;
+                case System.Drawing.Imaging.PixelFormat.Format16bppRgb555:
+                    Format16bppRgb555 object2 = new Format16bppRgb555();
                     break;
 
-
-                case System.Drawing.Imaging.PixelFormat.Format24bppRgb: 
-                    pif = OpenTK.Graphics.OpenGL.PixelInternalFormat.Rgb8;
-                    pf = OpenTK.Graphics.OpenGL.PixelFormat.Bgr;
-                    pt = OpenTK.Graphics.OpenGL.PixelType.UnsignedByte;
+                case System.Drawing.Imaging.PixelFormat.Format24bppRgb:
+                    Format24bppRgb object3 = new Format24bppRgb();
                     break;
 
-                case System.Drawing.Imaging.PixelFormat.Format32bppArgb: 
-                    pif = OpenTK.Graphics.OpenGL.PixelInternalFormat.Rgba;
-                    pf = OpenTK.Graphics.OpenGL.PixelFormat.Bgra;
-                    pt = OpenTK.Graphics.OpenGL.PixelType.UnsignedByte;
+                case System.Drawing.Imaging.PixelFormat.Format32bppArgb:
+                    Format32bppArgb object4 = new Format32bppArgb();
                     break;
 
                 default:
@@ -108,16 +99,17 @@ namespace WindowsFormsApplication4
                 #region Set Texture Parameters
                 //Помогает определить рендеринг текстуры, если она меньше или больше размера объекта
                 //Данное значение позволяет семплеру взять из текстуры цвет того текселя, центр которого находится ближе всего к точке, с которой семплер берет цветовые значения.
-                GL.TexParameter(dimension, TextureParameterName.TextureMinFilter, (int)TextureLoaderParameters.MinificationFilter);
-                GL.TexParameter(dimension, TextureParameterName.TextureMagFilter, (int)TextureLoaderParameters.MagnificationFilter);
+             //   GL.TexParameter(dimension, TextureParameterName.TextureMinFilter, (int)TextureLoaderParameters.MinificationFilter);
+             //   GL.TexParameter(dimension, TextureParameterName.TextureMagFilter, (int)TextureLoaderParameters.MagnificationFilter);
                 //Обертывание текстурой вдоль осей s и t
-                GL.TexParameter(dimension, TextureParameterName.TextureWrapS, (int)TextureLoaderParameters.WrapModeS);
-                GL.TexParameter(dimension, TextureParameterName.TextureWrapT, (int)TextureLoaderParameters.WrapModeT);
+             //   GL.TexParameter(dimension, TextureParameterName.TextureWrapS, (int)TextureLoaderParameters.WrapModeS);
+             //   GL.TexParameter(dimension, TextureParameterName.TextureWrapT, (int)TextureLoaderParameters.WrapModeT);
                 //Данный фильтр возвращает средневзвешенное значение соседних четырех пикселей, центры которых находятся ближе всего к точке, с которой семплер берет цветовые значения.
                 GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)All.Linear);		// Linear Filtering
                 GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)All.Linear);		// Linear Filtering
 
                 //Потом потестим, какую пару параметров стоит использовать
+                //Пока оставим последний фильтр
 
                 GLError = GL.GetError( );
                 if ( GLError != ErrorCode.NoError )
@@ -139,5 +131,55 @@ namespace WindowsFormsApplication4
             }
         }
 
+    }
+
+    class PixelFormat
+    {
+        public PixelFormat()
+        {
+            OpenTK.Graphics.OpenGL.PixelInternalFormat pif;
+            OpenTK.Graphics.OpenGL.PixelFormat pf;
+            OpenTK.Graphics.OpenGL.PixelType pt;
+        }
+    }
+
+    class Format8bppIndexed : PixelFormat
+    {
+        public Format8bppIndexed()
+        {
+            pif = OpenTK.Graphics.OpenGL.PixelInternalFormat.Rgb8;
+            pf = OpenTK.Graphics.OpenGL.PixelFormat.ColorIndex;
+            pt = OpenTK.Graphics.OpenGL.PixelType.Bitmap;
+        }
+    }
+
+    class Format16bppRgb555 : PixelFormat
+    {
+        public Format16bppRgb555() 
+        {
+            pif = OpenTK.Graphics.OpenGL.PixelInternalFormat.Rgb5A1;
+            pf = OpenTK.Graphics.OpenGL.PixelFormat.Bgr;
+            pt = OpenTK.Graphics.OpenGL.PixelType.UnsignedShort5551Ext;
+        }
+    }
+
+    class Format24bppRgb : PixelFormat
+    {
+        public Format24bppRgb()
+        {
+            pif = OpenTK.Graphics.OpenGL.PixelInternalFormat.Rgb8;
+            pf = OpenTK.Graphics.OpenGL.PixelFormat.Bgr;
+            pt = OpenTK.Graphics.OpenGL.PixelType.UnsignedByte;
+        }
+    }
+
+    class Format32bppArgb : PixelFormat
+    {
+        public Format32bppArgb()
+        {
+            pif = OpenTK.Graphics.OpenGL.PixelInternalFormat.Rgba;
+            pf = OpenTK.Graphics.OpenGL.PixelFormat.Bgra;
+            pt = OpenTK.Graphics.OpenGL.PixelType.UnsignedByte;
+        }
     }
 }
