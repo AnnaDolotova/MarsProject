@@ -1,0 +1,5 @@
+C:\Users\Marina\MarsProject\sources\WindowsFormsApplication4\bin\Debug\Project.exe.config
+C:\Users\Marina\MarsProject\sources\WindowsFormsApplication4\obj\Debug\Project.csprojResolveAssemblyReference.cache
+C:\Users\Marina\MarsProject\sources\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.Form1.resources
+C:\Users\Marina\MarsProject\sources\WindowsFormsApplication4\obj\Debug\Project.Properties.Resources.resources
+C:\Users\Marina\MarsProject\sources\WindowsFormsApplication4\obj\Debug\Project.csproj.GenerateResource.Cache
