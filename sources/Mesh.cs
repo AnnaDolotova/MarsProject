@@ -65,85 +65,15 @@ namespace WindowsFormsApplication4
             g_HeightMap = new short[MAP_SIZE_X*MAP_SIZE_Z];
         }
 
-        private void LoadHeightmap(string filename)
-        {//Класс FileStream предоставляет реализацию абстрактного члена Stream в манере, подходящей для потоковой работы с файлами. Это элементарный поток, и он может записывать или читать только один байт или массив байтов.
-            using (FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read))
-//Класс BinaryReader служит оболочкой, в которую заключается байтовый поток, управляющий вводом двоичных данных. Ниже приведен наиболее часто употребляемый конструктор этого класса:BinaryReader(Stream input)
-//где input обозначает поток, из которого вводятся считываемые данные. Для чтения из входного файла в качестве параметра input может быть указан объект, создаваемый средствами класса FileStream.
-//Оператор using стоит использовать всегда, когда это возможно при работе с объектами, реализующими IDisposable (Предоставляет механизм для освобождения неуправляемых ресурсов). Это гарантирует, что при возникновении исключения в коде unmanaged ресурсы будут очищены.
-            using (BinaryReader br = new BinaryReader(fs))
-            {
-                try
-                {
-                    for (int i = 0; i < MAP_SIZE_X * MAP_SIZE_Z; i++)
-                    {
-	//ReadInt - считываем из текущего потока целое число со знаком длиной два байта и перемещаем текущую позицию в потоке на два байта вперед. try-catch если можем, то делаем то, что под траем, если нет- кэтчим ошибку.
-                        g_HeightMap[i] = br.ReadInt16();
-                    }
-                }
-                catch (Exception ex)
-                {
-	//возвращает название ошибки.
-                    MessageBox.Show(ex.ToString());
-                }
-            }
-        }
-//загрузка текстур
-        private void LoadTexture(string filename)
-        {
-            
-            ImageGDI.LoadFromDisk(filename, out TMU0_Handle, out TMU0_Target, out imageWidth, out imageHeight);
-        }
-//функция пересчёта данных -масштабирование
-		//устанавливаем разрешение
-        public void Calculate(float flHeightScale, float flResolution)
-        {
-            // Generate Vertex Field
-            m_nVertexCount = (int)(MAP_SIZE_X * MAP_SIZE_Z * 6 / (flResolution * flResolution));
-
-            m_pVertices = new OpenTK.Math.Vector3[m_nVertexCount];						// Allocate Vertex Data
-            m_pRGB = new OpenTK.Math.Vector3[m_nVertexCount];
-            m_pTexCoords = new OpenTK.Math.Vector2[m_nVertexCount];				// Allocate Tex Coord Data
-
-            int nX, nZ, nTri, nIndex = 0;									// Create Variables
-            float flX, flZ;
-            for (nZ = 0; nZ < MAP_SIZE_Z - 1; nZ += (int)flResolution)
-            {
-                for (nX = 0; nX < MAP_SIZE_X - 1; nX += (int)flResolution)
-                {
-                    for (nTri = 0; nTri < 6; nTri++)
-                    {
-                        if (nIndex < m_nVertexCount)
-                        {
-                            // Using This Quick Hack, Figure The X,Z Position Of The Point
- 							flX = (float)nX + ((nTri == 1 || nTri == 2 || nTri == 5) ? flResolution : 0.0f);
-                            flZ = (float)nZ + ((nTri == 2 || nTri == 4 || nTri == 5) ? flResolution : 0.0f);
-                            m_pVertices[nIndex] = new OpenTK.Math.Vector3();
-                            // Set The Data, Using PtHeight To Obtain The Y Value
-                            m_pVertices[nIndex].Z = (flX - (MAP_SIZE_X / 2)) * 10;
-                            m_pVertices[nIndex].Y = ((GetHeight(g_HeightMap, (int)flX, (int)flZ)) * flHeightScale) * 10;
-                            m_pVertices[nIndex].X = (flZ - (MAP_SIZE_Z / 2)) * 10;
-
-                            m_pTexCoords[nIndex] = new OpenTK.Math.Vector2();
-                            // Stretch The Texture Across The Entire Mesh
-                            m_pTexCoords[nIndex].X = flX / imageWidth;
-                            m_pTexCoords[nIndex].Y = flZ / imageHeight;
-
-                        }
-                        nIndex++;
-                    }
-                }
-            }
-        }
 //загрузка и обработка всего и вся.
 
-        public void Load(string binariFileName, string texFileName, float flHeightScale, float flResolution)
+        public void load(string binariFileName, string texFileName, float flHeightScale, float flResolution)
         {
-            LoadHeightmap(binariFileName);
+            LoadHeightmap Heighmaploader = new LoadHeightmap(binariFileName);
 
-            LoadTexture(texFileName);
+            LoadTexture textureLoader = new LoadTexture(texFileName);
 
-            Calculate(flHeightScale, flResolution);
+            Calculate calculator = new Calculate(flHeightScale, flResolution);
         }
 
         short GetHeight(short[] pHeightMap, int X, int Y)      // Возвращает высоту из карты вершин
@@ -295,4 +225,89 @@ namespace WindowsFormsApplication4
         }
 
     }
+
+
+		class LoadHeihghtMap 
+		{
+		public LoadHeightmap(string filename)
+		        {//Класс FileStream предоставляет реализацию абстрактного члена Stream в манере, подходящей для потоковой работы с файлами. Это элементарный поток, и он может записывать или читать только один байт или массив байтов.
+		            using (FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read))
+		//Класс BinaryReader служит оболочкой, в которую заключается байтовый поток, управляющий вводом двоичных данных. Ниже приведен наиболее часто употребляемый конструктор этого класса:BinaryReader(Stream input)
+		//где input обозначает поток, из которого вводятся считываемые данные. Для чтения из входного файла в качестве параметра input может быть указан объект, создаваемый средствами класса FileStream.
+		//Оператор using стоит использовать всегда, когда это возможно при работе с объектами, реализующими IDisposable (Предоставляет механизм для освобождения неуправляемых ресурсов). Это гарантирует, что при возникновении исключения в коде unmanaged ресурсы будут очищены.
+		            using (BinaryReader br = new BinaryReader(fs))
+		            {
+		                try
+		                {
+		                    for (int i = 0; i < MAP_SIZE_X * MAP_SIZE_Z; i++)
+		                    {
+			//ReadInt - считываем из текущего потока целое число со знаком длиной два байта и перемещаем текущую позицию в потоке на два байта вперед. try-catch если можем, то делаем то, что под траем, если нет- кэтчим ошибку.
+		                        g_HeightMap[i] = br.ReadInt16();
+		                    }
+		                }
+		                catch (Exception ex)
+		                {
+			//возвращает название ошибки.
+		                    MessageBox.Show(ex.ToString());
+		                }
+		            }
+		        }
+		}
+		
+		
+		class LoadTexture
+		{
+			//загрузка текстур
+			public LoadTexture(string filename)
+			{
+			            
+				ImageGDI.LoadFromDisk(filename, out TMU0_Handle, out TMU0_Target, out imageWidth, out imageHeight);
+			}
+			
+		}
+		
+		class Calculate
+		{
+			//функция пересчёта данных -масштабирование
+					//устанавливаем разрешение
+			        public Calculate(float flHeightScale, float flResolution)
+			        {
+			            // Generate Vertex Field
+			            m_nVertexCount = (int)(MAP_SIZE_X * MAP_SIZE_Z * 6 / (flResolution * flResolution));
+
+			            m_pVertices = new OpenTK.Math.Vector3[m_nVertexCount];						// Allocate Vertex Data
+			            m_pRGB = new OpenTK.Math.Vector3[m_nVertexCount];
+			            m_pTexCoords = new OpenTK.Math.Vector2[m_nVertexCount];				// Allocate Tex Coord Data
+
+			            int nX, nZ, nTri, nIndex = 0;									// Create Variables
+			            float flX, flZ;
+			            for (nZ = 0; nZ < MAP_SIZE_Z - 1; nZ += (int)flResolution)
+			            {
+			                for (nX = 0; nX < MAP_SIZE_X - 1; nX += (int)flResolution)
+			                {
+			                    for (nTri = 0; nTri < 6; nTri++)
+			                    {
+			                        if (nIndex < m_nVertexCount)
+			                        {
+			                            // Using This Quick Hack, Figure The X,Z Position Of The Point
+			 							flX = (float)nX + ((nTri == 1 || nTri == 2 || nTri == 5) ? flResolution : 0.0f);
+			                            flZ = (float)nZ + ((nTri == 2 || nTri == 4 || nTri == 5) ? flResolution : 0.0f);
+			                            m_pVertices[nIndex] = new OpenTK.Math.Vector3();
+			                            // Set The Data, Using PtHeight To Obtain The Y Value
+			                            m_pVertices[nIndex].Z = (flX - (MAP_SIZE_X / 2)) * 10;
+			                            m_pVertices[nIndex].Y = ((GetHeight(g_HeightMap, (int)flX, (int)flZ)) * flHeightScale) * 10;
+			                            m_pVertices[nIndex].X = (flZ - (MAP_SIZE_Z / 2)) * 10;
+
+			                            m_pTexCoords[nIndex] = new OpenTK.Math.Vector2();
+			                            // Stretch The Texture Across The Entire Mesh
+			                            m_pTexCoords[nIndex].X = flX / imageWidth;
+			                            m_pTexCoords[nIndex].Y = flZ / imageHeight;
+
+			                        }
+			                        nIndex++;
+			                    }
+			                }
+			            }
+			        }
+		}
 }
