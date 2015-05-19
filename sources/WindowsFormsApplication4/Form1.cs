@@ -124,6 +124,15 @@ namespace WindowsFormsApplication4
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             GL.LoadIdentity();
 
+            GL.Clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+            GL.PolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+            GL.Color3f(0.0f, 0.5f, 0.5f);
+            Glu.Sphere(m_qObj, 1.0f, 10, 10);
+
+            SwapBuffers();
+
             GL.Rotate(30, 1, 0, 0);
 
             GL.Translate(X, Y, Z);
@@ -149,6 +158,7 @@ namespace WindowsFormsApplication4
             if (colorMode == ColorMode.Texture)
                 GL.Enable(EnableCap.Texture2D);									// Enable Textures
 
+
             GL.Color3(Color.White);
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, mesh.m_nVBOVertices);			// Bind The Buffer
@@ -160,12 +170,20 @@ namespace WindowsFormsApplication4
             GL.BindBuffer(BufferTarget.ArrayBuffer, mesh.m_nVBOTexCoords);		// Bind The Buffer
             GL.TexCoordPointer(2, TexCoordPointerType.Float, 0, new IntPtr(0));		// Set The TexCoord Pointer To The TexCoord Buffer
 
-
             GL.ActiveTexture(TextureUnit.Texture0);
             GL.BindTexture(TextureTarget.Texture2D, mesh.TMU0_Handle);
 
-
             GL.DrawArrays(drawMode, 0, mesh.m_nVertexCount);	// Draw All Of The Triangles At Once
+
+            if (colorMode == ColorMode.Texture)
+                GL.Disable(EnableCap.Texture2D);
+
+            // Disable Pointers
+            GL.DisableClientState(EnableCap.VertexArray);					// Disable Vertex Arrays
+            if (colorMode == ColorMode.Gradient)
+                GL.DisableClientState(EnableCap.ColorArray);					// Disable Vertex Arrays
+            if (colorMode == ColorMode.Texture)
+                GL.DisableClientState(EnableCap.TextureCoordArray);
 
             DrawCenter(mesh.maxX - (mesh.maxX - mesh.minX) / 2, mesh.maxY, mesh.maxZ - (mesh.maxZ - mesh.minZ) / 2, 1000);
 
@@ -176,9 +194,10 @@ namespace WindowsFormsApplication4
 
             GL.Flush();
 
+
             glControl1.SwapBuffers();
 
-            time += 1000.1F;        
+            time += 1000.1F;      
         }
 
         void DrawCenter(float x, float y, float z, float size)
@@ -223,8 +242,8 @@ namespace WindowsFormsApplication4
             GL.PolygonMode(MaterialFace.Front, PolygonMode.Fill);
 
             SetupViewport();
+
             mesh.Load("4.bin", "4.bmp", MESH_HEIGHTSCALE, MESH_RESOLUTION);
-       
             mesh.BuildVBOs();
         }
 
@@ -303,6 +322,7 @@ namespace WindowsFormsApplication4
 
         private void radioButton7_CheckedChanged(object sender, EventArgs e)
         {
+            mesh.Load("4.bin", "4.bmp", MESH_HEIGHTSCALE, MESH_RESOLUTION);
         }
 
         public enum ColorMode

@@ -3,3 +3,10 @@ C:\Users\Marina\MarsProject\sources\WindowsFormsApplication4\obj\Debug\Project.c
 C:\Users\Marina\MarsProject\sources\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.Form1.resources
 C:\Users\Marina\MarsProject\sources\WindowsFormsApplication4\obj\Debug\Project.Properties.Resources.resources
 C:\Users\Marina\MarsProject\sources\WindowsFormsApplication4\obj\Debug\Project.csproj.GenerateResource.Cache
+C:\Users\Marina\MarsProject\sources\WindowsFormsApplication4\bin\Debug\Project.exe
+C:\Users\Marina\MarsProject\sources\WindowsFormsApplication4\bin\Debug\Project.pdb
+C:\Users\Marina\MarsProject\sources\WindowsFormsApplication4\bin\Debug\OpenTK.Compatibility.dll
+C:\Users\Marina\MarsProject\sources\WindowsFormsApplication4\bin\Debug\OpenTK.dll
+C:\Users\Marina\MarsProject\sources\WindowsFormsApplication4\bin\Debug\OpenTK.GLControl.dll
+C:\Users\Marina\MarsProject\sources\WindowsFormsApplication4\obj\Debug\Project.exe
+C:\Users\Marina\MarsProject\sources\WindowsFormsApplication4\obj\Debug\Project.pdb
