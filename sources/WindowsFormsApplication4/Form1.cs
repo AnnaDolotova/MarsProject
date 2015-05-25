@@ -22,6 +22,10 @@ namespace WindowsFormsApplication4
 
         Mesh mesh = new Mesh();
 
+        Font serif = new Font(FontFamily.GenericSerif, 16.0f);
+        Font sans = new Font(FontFamily.GenericSansSerif, 10.0f);
+        TextPrinter text = new TextPrinter();
+
         private bool loaded = false;
         private bool mouseDown = false; // observe
 
@@ -124,15 +128,6 @@ namespace WindowsFormsApplication4
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             GL.LoadIdentity();
 
-            GL.Clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-            GL.PolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-            GL.Color3f(0.0f, 0.5f, 0.5f);
-            Glu.Sphere(m_qObj, 1.0f, 10, 10);
-
-            SwapBuffers();
-
             GL.Rotate(30, 1, 0, 0);
 
             GL.Translate(X, Y, Z);
@@ -191,6 +186,11 @@ namespace WindowsFormsApplication4
 
             GL.Translate(0.0f, 0.0f, -1.0f); // Передвижение на одну единицу вглубь
             GL.Color3(0, 255, 0);
+            text.Begin();
+            text.Print("Полигонов: " + mesh.m_nVertexCount / 3, sans, Color.SpringGreen, new RectangleF(10, 25, Width, 0), TextPrinterOptions.NoCache, TextAlignment.Near);
+            text.Print("Детализация: " + MESH_RESOLUTION, sans, Color.SpringGreen, new RectangleF(10, 45, Width, 0), TextPrinterOptions.NoCache, TextAlignment.Near);
+            text.Print("Маштаб высоты: " + MESH_HEIGHTSCALE, sans, Color.SpringGreen, new RectangleF(10, 65, Width, 0), TextPrinterOptions.NoCache, TextAlignment.Near);
+            text.End();
 
             GL.Flush();
 
@@ -305,30 +305,15 @@ namespace WindowsFormsApplication4
             glControl1.Invalidate();
         }
 
-        private void radioButton4_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void radioButton5_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void radioButton6_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void radioButton7_CheckedChanged(object sender, EventArgs e)
-        {
-            mesh.Load("4.bin", "4.bmp", MESH_HEIGHTSCALE, MESH_RESOLUTION);
-        }
-
         public enum ColorMode
         {
             Texture,
             Gradient
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
