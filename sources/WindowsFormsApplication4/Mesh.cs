@@ -12,7 +12,7 @@ using OpenTK.Audio;
 using OpenTK.Math;
 using OpenTK.Input;
 using OpenTK.Platform;
-using OpenTK.Graphics.OpenGL.Gl;
+
 
 //Name of our project
 // uint 0...4294967295
