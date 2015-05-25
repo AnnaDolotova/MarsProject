@@ -313,7 +313,10 @@ namespace WindowsFormsApplication4
 
         private void button2_Click(object sender, EventArgs e)
         {
+            mesh.Sphere(1000, 0, 0);
+            mesh.BuildVBOs();
 
+            glControl1.Invalidate();
         }
     }
 }

@@ -12,7 +12,6 @@ using OpenTK.Audio;
 using OpenTK.Math;
 using OpenTK.Input;
 using OpenTK.Platform;
-using OpenTK.Graphics.OpenGL.Gl;
 
 //Name of our project
 // uint 0...4294967295
@@ -310,9 +309,9 @@ namespace WindowsFormsApplication4
             GL.End();
             #endregion
         }
-		public void sphere(double r, int nx, int ny)
+		public void Sphere(double r, int nx, int ny)
 		{
-			int i, ix, iy;
+			int ix, iy;
 			double x, y, z;
 
 			for (iy=0; iy < ny; ++iy)
