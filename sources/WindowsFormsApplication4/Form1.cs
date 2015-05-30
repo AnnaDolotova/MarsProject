@@ -28,6 +28,9 @@ namespace WindowsFormsApplication4
 
         private bool loaded = false;
         private bool mouseDown = false; // observe
+        private bool isDrawSphere = false;
+
+        IntPtr esfera;
 
         float X = -5500.0f;        // Translate screen to x direction (left or right)
         float Y = -27000.0f;        // Translate screen to y direction (up or down)
@@ -59,7 +62,7 @@ namespace WindowsFormsApplication4
 
         private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
-            MESH_HEIGHTSCALE = trackBar2.Value / 1000.0f;// 0.01f;									// Mesh Height Scale
+            MESH_RESOLUTION = trackBar1.Value;									// Pixels Per Vertex
             mesh.Calculate(MESH_HEIGHTSCALE, MESH_RESOLUTION);
             mesh.BuildVBOs();
 
@@ -68,7 +71,7 @@ namespace WindowsFormsApplication4
 
         private void trackBar2_ValueChanged(object sender, EventArgs e)
         {
-            MESH_RESOLUTION = trackBar1.Value;									// Pixels Per Vertex
+            MESH_HEIGHTSCALE = trackBar2.Value / 1000.0f;// 0.01f;									// Mesh Height Scale
             mesh.Calculate(MESH_HEIGHTSCALE, MESH_RESOLUTION);
             mesh.BuildVBOs();
 
@@ -120,6 +123,7 @@ namespace WindowsFormsApplication4
         }
 
         float time = 0;
+
         private void glControl1_Paint(object sender, PaintEventArgs e)
         {
             if (!loaded) //Пока контекст не создан
@@ -138,6 +142,8 @@ namespace WindowsFormsApplication4
 
             GL.Translate(0.0f, 0.0f, -500.0f);						// Move Above The Terrain
 
+            if (!isDrawSphere)
+            {
             if (checkBox1.Checked)
             {
                 mesh.DrawBorder();
@@ -181,7 +187,16 @@ namespace WindowsFormsApplication4
                 GL.DisableClientState(EnableCap.TextureCoordArray);
 
             DrawCenter(mesh.maxX - (mesh.maxX - mesh.minX) / 2, mesh.maxY, mesh.maxZ - (mesh.maxZ - mesh.minZ) / 2, 1000);
-
+            }
+            else
+            {
+                // Draw green sphere
+                GL.Color3(0.0f, 1.0f, 0.0f);
+                GL.PushMatrix();
+                GL.Translate(0.0f, 500.0f, -500.0f);
+                Glu.Sphere(esfera, 10000.0f, 30, 30);
+                GL.PopMatrix();
+            }
             GL.LoadIdentity();
 
             GL.Translate(0.0f, 0.0f, -1.0f); // Передвижение на одну единицу вглубь
@@ -197,7 +212,8 @@ namespace WindowsFormsApplication4
 
             glControl1.SwapBuffers();
 
-            time += 1000.1F;      
+            time += 1000.1F;
+
         }
 
         void DrawCenter(float x, float y, float z, float size)
@@ -245,6 +261,8 @@ namespace WindowsFormsApplication4
 
             mesh.Load("4.bin", "4.bmp", MESH_HEIGHTSCALE, MESH_RESOLUTION);
             mesh.BuildVBOs();
+
+            esfera = Glu.NewQuadric();
         }
 
         private void SetupViewport()
@@ -297,10 +315,10 @@ namespace WindowsFormsApplication4
                 glControl1.Invalidate();
             }
         }
-
+        
         private void glControl1_MouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            Z += e.Delta * 10;
+            
 
             glControl1.Invalidate();
         }
@@ -313,8 +331,7 @@ namespace WindowsFormsApplication4
 
         private void button2_Click(object sender, EventArgs e)
         {
-            mesh.Sphere(1000, 0, 0);
-            mesh.BuildVBOs();
+            isDrawSphere = !isDrawSphere;
 
             glControl1.Invalidate();
         }
