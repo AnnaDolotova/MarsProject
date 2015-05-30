@@ -146,7 +146,7 @@ namespace WindowsFormsApplication4
             {
             if (checkBox1.Checked)
             {
-                mesh.DrawBorder();
+                mesh.DrawGrid();
                 mesh.DrawRectengle();
             }
 
@@ -191,7 +191,7 @@ namespace WindowsFormsApplication4
             else
             {
                 // Draw green sphere
-                GL.Color3(0.0f, 1.0f, 0.0f);
+                GL.Color3(Color.Tan);
                 GL.PushMatrix();
                 GL.Translate(0.0f, 500.0f, -500.0f);
                 Glu.Sphere(esfera, 10000.0f, 30, 30);
