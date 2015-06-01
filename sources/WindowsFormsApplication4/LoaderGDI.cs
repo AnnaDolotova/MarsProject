@@ -37,6 +37,12 @@ namespace WindowsFormsApplication4
                 Width = CurrentBitmap.Width;
                 Height = CurrentBitmap.Height;
 
+                if (TextureLoaderParameters.FlipImages)
+                    CurrentBitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
+
+                if (CurrentBitmap.Height > 1)
+                    dimension = OpenTK.Graphics.OpenGL.TextureTarget.Texture2D;
+                else
                 dimension = OpenTK.Graphics.OpenGL.TextureTarget.Texture2D;
 
                 GL.GenTextures(1, out texturehandle); //создаём одно имя для текстурного объекта и записываем его в массив

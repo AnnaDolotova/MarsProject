@@ -91,7 +91,7 @@ namespace WindowsFormsApplication4
 //загрузка текстур
         private void LoadTexture(string filename)
         {
-            ImageGDI.LoadFromDisk("4.bmp", out TMU0_Handle, out TMU0_Target, out imageWidth, out imageHeight);
+            ImageGDI.LoadFromDisk(filename, out TMU0_Handle, out TMU0_Target, out imageWidth, out imageHeight);
         }
 //функция пересчёта данных -масштабирование
 		//устанавливаем разрешение
@@ -198,7 +198,7 @@ namespace WindowsFormsApplication4
         {
             #region  rectangle
             GL.Begin(BeginMode.Lines);
-            GL.Color3(Color.SpringGreen);
+            GL.Color3(Color.SkyBlue);
 
             //  задняя грань
             GL.Vertex3(minX - TextureLoaderParameters.textr_const, maxY + TextureLoaderParameters.textr_const, minZ - TextureLoaderParameters.textr_const);
@@ -260,7 +260,7 @@ namespace WindowsFormsApplication4
         {
             #region  grid
             GL.Begin(BeginMode.Lines);
-            GL.Color3(Color.SpringGreen);
+            GL.Color3(Color.LightBlue);
 
             for (int i = (int)minX-5000; i < maxX+5000; i+=1000 )
             {
@@ -277,5 +277,65 @@ namespace WindowsFormsApplication4
             GL.End();
             #endregion
         }
+
+        public void DrawBorder()
+        {
+            #region  rectangle
+            GL.Begin(BeginMode.Quads);
+
+            //  задняя грань
+            GL.Color3(Color.FromArgb(23, 32, 89));
+            GL.Vertex3(minX-6000, maxY+6000, minZ-6000);
+            GL.Color3(Color.FromArgb(186, 197, 253));
+            GL.Vertex3(maxX+6000, maxY+6000, minZ-6000);
+            GL.Color3(Color.FromArgb(186, 197, 253));
+            GL.Vertex3(maxX+6000, minY-6000, minZ-6000);
+            GL.Color3(Color.FromArgb(23, 32, 89));
+            GL.Vertex3(minX-6000, minY-6000, minZ-6000);
+
+           
+
+            //  Нижняя грань
+            GL.Color3(Color.FromArgb(99, 109, 206));
+            GL.Vertex3(minX-6000, minY-6000, minZ-6000);
+            GL.Color3(Color.FromArgb(250, 250, 250));
+            GL.Vertex3(maxX+6000, minY-6000, minZ-6000);
+            GL.Color3(Color.FromArgb(250, 250, 250));
+            GL.Vertex3(maxX+6000, minY-6000, maxZ);
+            GL.Color3(Color.FromArgb(99, 109, 206));
+            GL.Vertex3(minX-6000, minY-6000, maxZ);
+
+
+            GL.End();
+            #endregion
+        }
+		public void Sphere(double r, int nx, int ny)
+		{
+			int ix, iy;
+			double x, y, z;
+
+			for (iy=0; iy < ny; ++iy)
+			{
+				GL.Begin(BeginMode.QuadStrip);
+				for (ix = 0; ix <= nx; ++ix)
+				{
+					x = r * Math.Sin(iy * Math.PI / ny) * Math.Cos(2 * ix * Math.PI / nx);
+					y = r * Math.Sin(iy * Math.PI / ny) * Math.Sin(2 * ix * Math.PI / nx);
+					z = r * Math.Cos(iy * Math.PI / ny);
+					GL.Normal3(x, y, z);//нормаль направлена от центра
+					GL.TexCoord2((double)ix / (double)nx, (double)iy / (double)ny);
+					GL.Vertex3(x, y, z);
+
+					x = r * Math.Sin((iy + 1) * Math.PI / ny) * Math.Cos(2 * ix * Math.PI / nx);
+					y = r * Math.Sin((iy + 1) * Math.PI / ny) * Math.Sin(2 * ix * Math.PI / nx);
+					z = r * Math.Cos((iy + 1) * Math.PI / ny);
+					GL.Normal3(x, y, z);
+					GL.TexCoord2((double)ix / (double)nx, (double)(iy + 1) / (double)ny);
+					GL.Vertex3(x, y, z);
+				}
+			GL.End();
+			}
+		}
+
     }
 }

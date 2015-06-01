@@ -22,6 +22,9 @@ namespace WindowsFormsApplication4
         //Compressed formats must have a border of 0, so this is constant.
         public const int Border = 0;
 
+        /// <summary>false==DirectX TexCoords, true==OpenGL TexCoords (Default: true)</summary>
+        public static bool FlipImages = true;
+
         //When enabled, will use Glu to create MipMaps for images loaded with GDI+ (Default: false)
         public static bool BuildMipmapsForUncompressed = false;
 
