@@ -40,44 +40,33 @@ namespace WindowsFormsApplication4
                 if (TextureLoaderParameters.FlipImages)
                     CurrentBitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
 
-                if (CurrentBitmap.Height > 1)
-                    dimension = OpenTK.Graphics.OpenGL.TextureTarget.Texture2D;
-                else
                 dimension = OpenTK.Graphics.OpenGL.TextureTarget.Texture2D;
 
                 GL.GenTextures(1, out texturehandle); //создаём одно имя для текстурного объекта и записываем его в массив
                 GL.BindTexture(dimension, texturehandle); //создаём и связываем текстурный объект с последующим состоянием текстуры  
 
                 #region Load Texture
+
                 OpenTK.Graphics.OpenGL.PixelInternalFormat pif;
                 OpenTK.Graphics.OpenGL.PixelFormat pf;
                 OpenTK.Graphics.OpenGL.PixelType pt;
 
                 switch (CurrentBitmap.PixelFormat)
                 {
-                case System.Drawing.Imaging.PixelFormat.Format8bppIndexed: 
-                    pif = OpenTK.Graphics.OpenGL.PixelInternalFormat.Rgb8;
-                    pf = OpenTK.Graphics.OpenGL.PixelFormat.ColorIndex;
-                    pt = OpenTK.Graphics.OpenGL.PixelType.Bitmap;
+                case System.Drawing.Imaging.PixelFormat.Format8bppIndexed:
+                    Format8bppIndexed object1 = new Format8bppIndexed(out pif, out pf, out pt);
                     break;
 
-                case System.Drawing.Imaging.PixelFormat.Format16bppRgb555: 
-                    pif = OpenTK.Graphics.OpenGL.PixelInternalFormat.Rgb5A1;
-                    pf = OpenTK.Graphics.OpenGL.PixelFormat.Bgr;
-                    pt = OpenTK.Graphics.OpenGL.PixelType.UnsignedShort5551Ext;
+                case System.Drawing.Imaging.PixelFormat.Format16bppRgb555:
+                    Format16bppRgb555 object2 = new Format16bppRgb555(out pif, out pf, out pt);
                     break;
 
-
-                case System.Drawing.Imaging.PixelFormat.Format24bppRgb: 
-                    pif = OpenTK.Graphics.OpenGL.PixelInternalFormat.Rgb8;
-                    pf = OpenTK.Graphics.OpenGL.PixelFormat.Bgr;
-                    pt = OpenTK.Graphics.OpenGL.PixelType.UnsignedByte;
+                case System.Drawing.Imaging.PixelFormat.Format24bppRgb:
+                    Format24bppRgb object3 = new Format24bppRgb(out pif, out pf, out pt);
                     break;
 
-                case System.Drawing.Imaging.PixelFormat.Format32bppArgb: 
-                    pif = OpenTK.Graphics.OpenGL.PixelInternalFormat.Rgba;
-                    pf = OpenTK.Graphics.OpenGL.PixelFormat.Bgra;
-                    pt = OpenTK.Graphics.OpenGL.PixelType.UnsignedByte;
+                case System.Drawing.Imaging.PixelFormat.Format32bppArgb:
+                    Format32bppArgb object4 = new Format32bppArgb(out pif, out pf, out pt);
                     break;
 
                 default:
@@ -112,34 +101,31 @@ namespace WindowsFormsApplication4
                 #endregion Load Texture
                 
                 #region Set Texture Parameters
-                //Помогает определить рендеринг текстуры, если она меньше или больше размера объекта
-                //Данное значение позволяет семплеру взять из текстуры цвет того текселя, центр которого находится ближе всего к точке, с которой семплер берет цветовые значения.
-                GL.TexParameter(dimension, TextureParameterName.TextureMinFilter, (int)TextureLoaderParameters.MinificationFilter);
-                GL.TexParameter(dimension, TextureParameterName.TextureMagFilter, (int)TextureLoaderParameters.MagnificationFilter);
-                //Обертывание текстурой вдоль осей s и t
-                GL.TexParameter(dimension, TextureParameterName.TextureWrapS, (int)TextureLoaderParameters.WrapModeS);
-                GL.TexParameter(dimension, TextureParameterName.TextureWrapT, (int)TextureLoaderParameters.WrapModeT);
+                
                 //Данный фильтр возвращает средневзвешенное значение соседних четырех пикселей, центры которых находятся ближе всего к точке, с которой семплер берет цветовые значения.
                 GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)All.Linear);		// Linear Filtering
                 GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)All.Linear);		// Linear Filtering
-
-                //Потом потестим, какую пару параметров стоит использовать
 
                 GLError = GL.GetError( );
                 if ( GLError != ErrorCode.NoError )
                 {
                     throw new ArgumentException( "Error setting Texture Parameters. GL Error: " + GLError );
                 }
+
                 #endregion Set Texture Parameters
 
                 return; // success
-            } catch ( Exception e )
+            } 
+            
+            catch ( Exception e )
             {
                 dimension = (TextureTarget) 0;
                 texturehandle = TextureLoaderParameters.OpenGLDefaultTexture;
                 throw new ArgumentException( "Texture Loading Error: Failed to read file " + filename + ".\n" + e );
                 // return; // failure
-            } finally
+            }
+            
+            finally
             {
                 CurrentBitmap = null;
             }
