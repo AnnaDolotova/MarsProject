@@ -34,3 +34,12 @@ C:\Users\Анна\Desktop\MarsProject\sources\WindowsFormsApplication4\obj\Relea
 C:\Users\Анна\Desktop\MarsProject\sources\WindowsFormsApplication4\obj\Release\WindowsFormsApplication4.Form1.resources
 C:\Users\Анна\Desktop\MarsProject\sources\WindowsFormsApplication4\obj\Release\Project.Properties.Resources.resources
 C:\Users\Анна\Desktop\MarsProject\sources\WindowsFormsApplication4\obj\Release\Project.csproj.GenerateResource.Cache
+C:\Users\Анна\Documents\MarsProject\sources\WindowsFormsApplication4\bin\Release\Project.exe.config
+C:\Users\Анна\Documents\MarsProject\sources\WindowsFormsApplication4\obj\Release\Project.exe
+C:\Users\Анна\Documents\MarsProject\sources\WindowsFormsApplication4\obj\Release\Project.pdb
+C:\Users\Анна\Documents\MarsProject\sources\WindowsFormsApplication4\bin\Release\Project.exe
+C:\Users\Анна\Documents\MarsProject\sources\WindowsFormsApplication4\bin\Release\Project.pdb
+C:\Users\Анна\Documents\MarsProject\sources\WindowsFormsApplication4\obj\Release\Project.csprojResolveAssemblyReference.cache
+C:\Users\Анна\Documents\MarsProject\sources\WindowsFormsApplication4\obj\Release\WindowsFormsApplication4.Form1.resources
+C:\Users\Анна\Documents\MarsProject\sources\WindowsFormsApplication4\obj\Release\Project.Properties.Resources.resources
+C:\Users\Анна\Documents\MarsProject\sources\WindowsFormsApplication4\obj\Release\Project.csproj.GenerateResource.Cache

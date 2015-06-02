@@ -374,6 +374,7 @@ namespace WindowsFormsApplication4
         {
             if (radioButton4.Checked)
             {
+                mesh.ClearVBO();
                 mesh = new Mesh();
 
                 mesh.Load("1.bin", "1.bmp", MESH_HEIGHTSCALE, MESH_RESOLUTION);
@@ -385,6 +386,7 @@ namespace WindowsFormsApplication4
         {
             if (radioButton5.Checked)
             {
+                mesh.ClearVBO();
                 mesh = new Mesh();
 
                 mesh.Load("2.bin", "2.bmp", MESH_HEIGHTSCALE, MESH_RESOLUTION);
@@ -396,6 +398,7 @@ namespace WindowsFormsApplication4
         {
             if (radioButton6.Checked)
             {
+                mesh.ClearVBO();
                 mesh = new Mesh();
 
                 mesh.Load("3.bin", "3.bmp", MESH_HEIGHTSCALE, MESH_RESOLUTION);
@@ -407,6 +410,7 @@ namespace WindowsFormsApplication4
         {
             if (radioButton7.Checked)
             {
+                mesh.ClearVBO();
                 mesh = new Mesh();
 
                 mesh.Load("4.bin", "4.bmp", MESH_HEIGHTSCALE, MESH_RESOLUTION);
@@ -418,6 +422,7 @@ namespace WindowsFormsApplication4
         {
             if (radioButton8.Checked)
             {
+                mesh.ClearVBO();
                 mesh = new Mesh();
 
                 mesh.Load("5.bin", "5.bmp", MESH_HEIGHTSCALE, MESH_RESOLUTION);
@@ -429,6 +434,7 @@ namespace WindowsFormsApplication4
         {
             if (radioButton9.Checked)
             {
+                mesh.ClearVBO();
                 mesh = new Mesh();
 
                 mesh.Load("6.bin", "6.bmp", MESH_HEIGHTSCALE, MESH_RESOLUTION);
@@ -440,6 +446,7 @@ namespace WindowsFormsApplication4
         {
             if (radioButton10.Checked)
             {
+                mesh.ClearVBO();
                 mesh = new Mesh();
 
                 mesh.Load("7.bin", "7.bmp", MESH_HEIGHTSCALE, MESH_RESOLUTION);
@@ -451,6 +458,7 @@ namespace WindowsFormsApplication4
         {
             if (radioButton11.Checked)
             {
+                mesh.ClearVBO();
                 mesh = new Mesh();
 
                 mesh.Load("8.bin", "8.bmp", MESH_HEIGHTSCALE, MESH_RESOLUTION);
@@ -462,6 +470,7 @@ namespace WindowsFormsApplication4
         {
             if (radioButton12.Checked)
             {
+                mesh.ClearVBO();
                 mesh = new Mesh();
 
                 mesh.Load("9.bin", "9.bmp", MESH_HEIGHTSCALE, MESH_RESOLUTION);
@@ -473,6 +482,7 @@ namespace WindowsFormsApplication4
         {
             if (radioButton13.Checked)
             {
+                mesh.ClearVBO();
                 mesh = new Mesh();
 
                 mesh.Load("10.bin", "10.bmp", MESH_HEIGHTSCALE, MESH_RESOLUTION);
@@ -484,6 +494,7 @@ namespace WindowsFormsApplication4
         {
             if (radioButton14.Checked)
             {
+                mesh.ClearVBO();
                 mesh = new Mesh();
 
                 mesh.Load("11.bin", "11.bmp", MESH_HEIGHTSCALE, MESH_RESOLUTION);
@@ -495,6 +506,7 @@ namespace WindowsFormsApplication4
         {
             if (radioButton15.Checked)
             {
+                mesh.ClearVBO();
                 mesh = new Mesh();
 
                 mesh.Load("12.bin", "12.bmp", MESH_HEIGHTSCALE, MESH_RESOLUTION);

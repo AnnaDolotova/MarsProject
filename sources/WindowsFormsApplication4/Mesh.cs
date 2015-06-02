@@ -24,6 +24,8 @@ namespace WindowsFormsApplication4
 	//	Library Open.TK.Math helps us to use arrays easily. We can use type vector, which is needed for loading data.
     public class Mesh
     {
+//Want to make array which will contain all vertexes, that's why we need the biggest dimensions of our feature map. (for right recount)
+	
         int MAP_SIZE_X = 3840;     // Size of the vertex map
         int MAP_SIZE_Z = 3840;     // Size of the vertex map
         short[] g_HeightMap;    // Array which contains coordinates of all vertexes
@@ -34,14 +36,15 @@ namespace WindowsFormsApplication4
         public OpenTK.Math.Vector2[] m_pTexCoords; // Texture Coordinates								
 
     	public uint	m_nTextureId; // Texture ID								
- //особенность openGL. VBO дали существенный прирост производительност над непосредственном режимом визуализации 
+        //VBO - it is some magic, created by openGL developer, which helps us to download some cool
+        //things in video memory.
 	    // Vertex Buffer Object Names
-	    public uint	m_nVBOVertices;								// Vertex VBO Name
-	    public uint	m_nVBOTexCoords;							// Texture Coordinate VBO Name
+	    public uint	m_nVBOVertices;						// Vertex VBO Name
+	    public uint	m_nVBOTexCoords;					// Texture Coordinate VBO Name
 	    public uint	m_nVBORGB;							// Texture Coordinate VBO Name
 
-		    // Temporary Data
-	        //Bind a named texture to a texturing target
+		// Temporary Data
+	    //Bind a named texture to a texturing target
         public uint TMU0_Handle;
         public OpenTK.Graphics.OpenGL.TextureTarget TMU0_Target;
 
@@ -49,9 +52,11 @@ namespace WindowsFormsApplication4
         public uint TMU1_Handle;
         public OpenTK.Graphics.OpenGL.TextureTarget TMU1_Target;
 
-//Width, Heigth of our MAP
+		//Width, Heigth of our MAP
         int imageWidth, imageHeight;
 
+		
+		
         public float maxX = 0;
         public float minX = 0;
         public float maxY = 0;
@@ -61,7 +66,7 @@ namespace WindowsFormsApplication4
 
         public Mesh()
         {
-	//memory
+		//memory for our array with vertexes coordinates
             g_HeightMap = new short[MAP_SIZE_X*MAP_SIZE_Z];
         }
 
@@ -91,6 +96,8 @@ namespace WindowsFormsApplication4
 //загрузка текстур
         private void LoadTexture(string filename)
         {
+	
+//Воруем Анину функцию.
             ImageGDI.LoadFromDisk(filename, out TMU0_Handle, out TMU0_Target, out imageWidth, out imageHeight);
         }
 //функция пересчёта данных -масштабирование
@@ -100,12 +107,17 @@ namespace WindowsFormsApplication4
             // Generate Vertex Field
             m_nVertexCount = (int)(MAP_SIZE_X * MAP_SIZE_Z * 6 / (flResolution * flResolution));
 
-            m_pVertices = new OpenTK.Math.Vector3[m_nVertexCount];						// Allocate Vertex Data
+			// Allocate Vertex Data
+            m_pVertices = new OpenTK.Math.Vector3[m_nVertexCount];
             m_pRGB = new OpenTK.Math.Vector3[m_nVertexCount];
-            m_pTexCoords = new OpenTK.Math.Vector2[m_nVertexCount];				// Allocate Tex Coord Data
+            m_pTexCoords = new OpenTK.Math.Vector2[m_nVertexCount];
 
-            int nX, nZ, nTri, nIndex = 0;									// Create Variables
+
+			// Create Variables. This is variables helpers - we will use them in cycles.
+            int nX, nZ, nTri, nIndex = 0;		
             float flX, flZ;
+
+
             for (nZ = 0; nZ < MAP_SIZE_Z - 1; nZ += (int)flResolution)
             {
                 for (nX = 0; nX < MAP_SIZE_X - 1; nX += (int)flResolution)
@@ -124,6 +136,8 @@ namespace WindowsFormsApplication4
                             m_pVertices[nIndex].X = (flZ - (MAP_SIZE_Z / 2)) * 10;
 
                             m_pTexCoords[nIndex] = new OpenTK.Math.Vector2();
+
+
                             // Stretch The Texture Across The Entire Mesh
                             m_pTexCoords[nIndex].X = flX / imageWidth;
                             m_pTexCoords[nIndex].Y = flZ / imageHeight;
@@ -139,6 +153,9 @@ namespace WindowsFormsApplication4
                             m_pRGB[nIndex].Y = GetHeight(g_HeightMap, (int)flX, (int)flZ) * 0.000057f;
                             m_pRGB[nIndex].Z = GetHeight(g_HeightMap, (int)flX, (int)flZ) * 0.000031f;
 
+			
+			
+							//everything to be positive and cheten'koe
                             if (m_pRGB[nIndex].X < 0)
                                 m_pRGB[nIndex].X = m_pRGB[nIndex].X * -1;
                             if (m_pRGB[nIndex].Y < 0)
@@ -151,7 +168,7 @@ namespace WindowsFormsApplication4
                 }
             }
         }
-//загрузка и обработка всего и вся.
+//Loading of everything
 
         public void Load(string binariFileName, string texFileName, float flHeightScale, float flResolution)
         {
@@ -173,10 +190,10 @@ namespace WindowsFormsApplication4
         public void BuildVBOs()
         {
             // Generate And Bind The Vertex Buffer
-            GL.DeleteBuffers(1, ref m_nVBOVertices);							// Get A Valid Name
-            GL.GenBuffers(1, out m_nVBOVertices);							// Get A Valid Name
+            GL.DeleteBuffers(1, ref m_nVBOVertices);			// Get A Valid Name. returns n buffer objects. m_nVBOVertices - Specifies an array in which the generated buffer object names are stored
+            GL.GenBuffers(1, out m_nVBOVertices);			// Get A Valid Name. BufferTarget.ArrayBuffer - Specifies the target to which the buffer object is bound. m_nVBOVertices - Specifies the name of a buffer object
             GL.BindBuffer(BufferTarget.ArrayBuffer, m_nVBOVertices);			// Bind The Buffer
-            // Load The Data
+            // Load The Data. BufferTarget.ArrayBuffer - Specifies the target buffer object. 2 - Specifies the size in bytes of the buffer object's new data store. 3 - Specifies a pointer to data that will be copied into the data store for initialization.  
             GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(m_nVertexCount * 3 * sizeof(float)), m_pVertices, BufferUsageHint.StaticDraw);
             
             // Generate And Bind The Color Buffer
@@ -194,6 +211,15 @@ namespace WindowsFormsApplication4
             GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(m_nVertexCount * 2 * sizeof(float)), m_pTexCoords, BufferUsageHint.StaticDraw);
         }
 
+        public void ClearVBO()
+        {
+            GL.DeleteBuffers(1, ref m_nVBOVertices);
+            GL.DeleteBuffers(1, ref m_nVBORGB);
+            GL.DeleteBuffers(1, ref m_nVBOTexCoords);
+        }
+
+
+		//background object for better perception of the map of mars (helps to understand where is right, left, button, top). This is blue cage in which map will be hidden
         public void DrawRectengle()
         {
             #region  rectangle
@@ -255,7 +281,7 @@ namespace WindowsFormsApplication4
             GL.End();
             #endregion
         }
-
+		//this is stand-grid, which helps us to ubderstand where is top and where is buttom
         public void DrawGrid()
         {
             #region  grid
@@ -277,7 +303,8 @@ namespace WindowsFormsApplication4
             GL.End();
             #endregion
         }
-
+		
+		//This is tottaly painted rectangles, which were not very stylish. That's why we use grid instead of them.
         public void DrawBorder()
         {
             #region  rectangle
